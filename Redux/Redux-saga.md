@@ -3,6 +3,19 @@
 redux를 사용하면서 비동기 작업을 처리할 때 필요한 라이브러리 중 하나이다. 
 saga의 작동 원리는 Generator 함수를 이용하고 있다.
 
+Generator functoin은 다음과 같이 생겼다.
+
+```ts
+function* generatorFunction() {
+  yield console.log('hello!');
+}
+```
+
+먼저 Generator란 반복을 제어할 수 있는 함수라고 이해하면 된다. 이 generator를 사용하기 위해서  `function*` 키워드를 사용한다.
+`yield` 키워드를 사용해서 해당 표현식으로부터 반환값을 받는다.
+
+saga에서 사용하는 키워드 중 일부는 다음과 같다.
+
 call: 함수의 첫 번째 파라미터는 함수, 나머지 파라미터는 해당 함수에 넣을 인수이다.
 put: 특정 액션 dispatch
 takeEvey: 들어오는 모든 액션에 대해 특정 작업을 처리해준다.

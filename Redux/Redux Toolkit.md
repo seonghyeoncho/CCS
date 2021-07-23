@@ -21,6 +21,13 @@ Toolkit은 기본적으로 Ts를 공식적으로 지원하고 있다.
 먼저 Toolkit의 공식 문서들을 보면 하나의 Compoenet 안에 하나의 slice가 있다. 
 이름 자체가 slice이니 상태를 최대한 작게 나누어서 관리하려는 방향이 보였다.
 
+간단한 Counter를 예시로 들어보겠다.
 
+먼저 디렉토리 구조는 다음과 같이 구성한다.
 
+Counter
+  |_ slice.ts
+  |_ CounterContainer.tsx
+  |_ CounterPresenter.tsx
+store.ts
 
