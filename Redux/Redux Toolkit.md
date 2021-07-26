@@ -1,10 +1,10 @@
 # Redux Toolkit
 
 기존 리덕스 사용자라면 
-action을 만들어야하고,
-action creator를 만들어야하고,
-reducer를 만들어 준 다음에,
-store에 연결하는 과정을 필요할 때마다 해야한다.
+  1. action을 만들어야하고,
+  2. action creator를 만들어야하고,
+  3. reducer를 만들어 준 다음에,
+  4. store에 연결하는 과정을 필요할 때마다 해야한다.
 그리고 나서 비동기 작업을 하기 위해서는 thunk또는 saga를 추가적으로 설치를 해야한다.
 
 이렇게 하면 굉장히 많은 bolierplate를 작성해야한다. 
@@ -15,7 +15,7 @@ store에 연결하는 과정을 필요할 때마다 해야한다.
 
 Toolkit은 기본적으로 Ts를 공식적으로 지원하고 있다. 
 
-나 또한 프로젝트에서 bolierplate를 엄청나게 작성했던 경험이 있었고, 무언가를 할때마다 작성했던 귀찮음이 있어서 Toolkit을 사용해보기로 했다.
+나 또한 프로젝트에서 bolierplate를 엄청나게 작성했던 경험이 있었고(물론 그때 실력이 많이 부족했던 게 가장 큰 이유...), 무언가를 할때마다 작성했던 귀찮음이 있어서 Toolkit을 사용해보기로 했다.
 또한 이번 프로젝트에서 사용하는 Presenter & Container pattern을 사용하면서, Toolkit을 사용해도 괜찮을 것 같다고 판단을 하였다.
 
 먼저 Toolkit의 공식 문서들을 보면 하나의 Compoenet 안에 하나의 slice가 있다. 
