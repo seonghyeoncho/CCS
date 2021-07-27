@@ -183,6 +183,7 @@ const Usage = (): JSX.Element => {
 
 export { Usage };
 ```
+
 ### 장점
   1. Custom hook을 통한 방법보단 사용하기 쉽다. 복잡한 부분은 가려져 있어서, 유저는 올바른 getter를 잘 사용하기만 된다. 
   2. 유저가 원한다면 props를 오버로드할 수 있어서 유연하다.
