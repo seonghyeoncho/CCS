@@ -24,7 +24,6 @@ enabled=1
 <!-- Linux 2를 사용하고 있는데 centOS가 보인다...? -->
 그런 후에 다시 repo를 확인해보면 정상적으로 출력이 되어있다. 
 
-
 ```
 sudo yum install nginx
 ```

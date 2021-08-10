@@ -21,3 +21,55 @@ put: 특정 액션 dispatch
 takeEvey: 들어오는 모든 액션에 대해 특정 작업을 처리해준다.
 takeLatest: 기존에 진행 중이던 작업이 있다면 취소 처리하고 가장 마지막으로 실행된 작업만 수행한다.
 all: 제네레이터 함수를 배열 인자로 넣어주며느 각 함수들이 병핼적으로 동시레 실행되고, 전부 resolve될 때까지 기다린다.
+
+
+### redux-saga + router 
+
+saga에서 history를 사용할 수 있다.
+
+```ts
+import { createBrowserHistory } from 'history';
+
+export const customHistory = createBrowserHistory();
+const sagaMiddleware = createSagaMiddleware({
+  context: {
+    history: customHistory
+  }
+});
+```
+
+```tsx
+import { createBrowserHistory } from 'history';
+
+ReactDOM.render(
+  <React.StrictMode>
+    <Router history={customHistory}>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <GlobalStyle/>
+          <RouterContainer/>
+        </ThemeProvider>
+      </Provider>
+    </Router>
+  </React.StrictMode>,
+  document.getElementById("root"),
+);
+```
+
+```ts
+import { createBrowserHistory } from 'history';
+function* createStoreSaga(action: {
+  type: string;
+  payload: {
+    data: CreateStoreData
+  }
+}) {
+  yield put(setLoading(true));
+  const response: AxiosResponse<CreateStoreResponse> = yield call(storeAPI.createStore, action.payload.data);
+
+  if (response.status === StatusCodes.CREATED) {
+    yield localStorage.setItem('storeId', response.data.store_id);
+    yield customHistory.push('/console');
+  }
+}
+```
