@@ -4,6 +4,12 @@
 - 테이블과 링크될 클래스임을 나타냅니다.
 - 기본값으로 클래스의 카멜케이스 이름을 언더스코어 메이밍으로 테이블 이름을 매칭합니다.
 
+`@MappedSuperclass`
+- JPA Entity 클래스들이 BaseTimeEntity을 상속할 경우 필드들도 칼럼으로 인식하도록 합니다.
+
+`@EntityListeners(AuditingEntityListener.class)`
+- BaseTimeEntity 클래스에 Auditing 기능을 포함시킵니다.
+
 `@GeneratedValue`
 - PK의 생성 규칙을 나타냅니다.
 - `strategy = GenerationType.IDENTITY`옵션을 추가해야만 `auto_increment`가 적용됩니다.
@@ -38,5 +44,18 @@ public class Posts extends BaseTimeEntity {
         this.title = title;
         this.content = content;
     }
+}
+```
+```java
+@Getter
+@MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
+public abstract class BaseTimeEntity {
+
+    @CreatedDate
+    private LocalDateTime createdDate;
+
+    @LastModifiedDate
+    private LocalDateTime modifiedDate;
 }
 ```
