@@ -20,6 +20,7 @@
   - stateless하다.
 
 
+
 ```ts
 const Container = (): JSX.Element => {
   const [data, setData] = useState<string>('');
@@ -42,6 +43,8 @@ const Presenter = (data: string): JSX.Element => (
 
 ## Atomic Design Pattern
 디자인 요소들을 나누어 파악하고 이 요소들이 조합되는 과정을 통해서 디자인을 구성하는 방식.
+
+![img](./img/AtomicPattern.png)
 
 5개의 구분된 단계가 존재한다. 
   - Atoms
