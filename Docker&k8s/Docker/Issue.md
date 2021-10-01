@@ -15,3 +15,5 @@ link할 container가 실행되지 않은 상태에서 명령어를 사용하면 
 `docker exec -it [container id] mysql -u root -p [password]`를 이용해서 접속하려 했는데 다시 비밀번호를 요청하면서 접속이 거부되었다.
 그래서 `docker exec -it [container id] mysql`로 접속하였더니 잘 접속이 되었다. 
 왜 그런지는 container 환경 변수 때문으로 생각하고 있다. 
+
+# 응 아니야 오타야
