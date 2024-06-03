@@ -41,8 +41,22 @@ SWAP 공간 생성 방법은 다음과 같다.
 
 ```
 sudo touch /var/spool/swap/swapfile 
-sudo dd if=/dev/zero of=/var/spool/swap/swapfile count=2048000 bs=1024
 ```
+2GB
+```
+sudo dd if=/dev/zero of=/var/spool/swap/swapfile count=16 bs=128M
+```
+4GB
+```
+sudo dd if=/dev/zero of=/var/spool/swap/swapfile count=32 bs=128M
+```
+`dd`: 블록 단위로 파일을 복사하거나 변환
+`if`: 지정한 파일을 입력 대상으로 지정
+`of`:지정한 파일을 출력 대상으로 지정
+`bs`: 한 번에 변환 작업 가능한 바이트 크기
+`count`: 지정한 블록 수만큼 복사
+
+
 
 처음 명령어에서 디렉토리가 없다는 메세지가 나올 수 있다.
 그럴때는 그냥 만들어주면 된다. 
@@ -61,15 +75,23 @@ sudo chmod 600 /var/spool/swap/swapfile
 ### 파일 포맷을 접근 가능하도록 권한을 설정한다.
 ```
 sudo mkswap /var/spool/swap/swapfile
+```
+```
 sudo swapon /var/spool/swap/swapfile
 ```
 ### 파일 시스템 테이블에 등록한다.
+시스템이 부팅 시 자동으로 활성화 한다. 
 ```
 sudo vi /etc/fstab
 ```
 ### 정상적으로 등록이 되어 있는지 확인한다.
 ```
 free -h
+```
+
+### 만약 스왑 영역을 비활성화 하려면 다음 명령어를 사용하면 된다.
+```
+sudo swapoff -a
 ```
 
 
