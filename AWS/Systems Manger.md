@@ -30,5 +30,4 @@ Systems  Manager는 AWS 애플리케이션 및 리소스를 위한 운영 허브
 
 그래서 외부에서 주입해줄 수 있는게 필요했고, 비용이 들지 않는 Parameter Store를 이용하는 것이었다. 
 
-가능하다면 Systems Manager를 패스스루로 사용하여 Secret Manger에 접근하여 민감한 정보를 관리할 수 있도록 하자. AWS가 공식으로 작성한 방법이기도 하다. 
-
+[AWS와 Github로 CI/CD 파이프 라인 구축하기](/tech/AWS,%20Github%20이용해서%20파이프라인%20구축하기.md)
