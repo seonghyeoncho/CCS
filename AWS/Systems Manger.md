@@ -1,5 +1,19 @@
 # Systems  Manager
-Systems  Manager는 AWS 애플리케이션 및 리소스를 위한 운영 허브이다.
+Systems  Manager는 AWS 애플리케이션 및 리소스를 위한 운영 허브이자, 안전한 운영이 대규모로 활성화되는 하이브리드 및 멀티클라우드 환경을 위한 한정한 엔드 투 엔드 관리 솔루션이다.라고 AWS가  말하긴한다. 
+
+
+필자가 생각했을 때 이 서비스는 다음과 같은 상황에서 사용하면 좋을 것 같다.
+
+
+1. 새로 생성하는 서버의 정보를 일관성 있게 유지하고 싶을때
+2. 사용 중인 모든 인스턴스에 새로운 컨테이너를 생성해야할 때
+
+
+## Application management
+### Application Manager
+## Change management
+## Node management
+## Operation management
 
 
 ## 저는 이렇게 사용했는데요
