@@ -26,7 +26,6 @@ class tcpClient {
     this.onRead = onRead;
     this.onEnd = onEnd;
     this.onError = onError;
-
   }
 
   connect() {

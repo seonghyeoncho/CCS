@@ -22,9 +22,9 @@ var map = {};
  */
 
 
-class distributor extends require('./server') {
+class distributor extends require('./server.js') {
   constructor() {
-    super("distributor, 9000" ,["POST/distributes", "GET/distributes"]);
+    super("distributor", 9000 ,["POST/distributes", "GET/distributes"]);
   }
   
   //노드 접속 이벤트 처리
@@ -56,7 +56,7 @@ class distributor extends require('./server') {
     };
     
     for(var n in map) {
-      packet.params.push(map[n]);
+      packet.params.push(map[n].info);
     }
 
     if(socket) {
@@ -70,19 +70,20 @@ class distributor extends require('./server') {
   //노드가 접속하고자 할 때 사용합니다.
   //접속할 때 마다 map에 노드의 정보를 저장합니다. 
   //소켓 정보에서 호스트의 정보와 포트 정보를 추출하여 key로 사용합니다.
-  onRead() {
+  onRead(socket, json) {
     var key = socket.remoteAddress + ":" + socket.remotePort;
-    console.log("onRead", socket.remoteAddress, socket.remotePort, data);
+    console.log("onRead", socket.remoteAddress, socket.remotePort, json);
 
-    var packet = JSON.parse(data);
-    if(packet.uri == "/distributes" && packet.method == "POST") {
+    if(json.uri == "/distributes" && json.method == "POST") {
       map[key] = {
         socket: socket
       };
-      map[key].info = packet.params;
+      map[key].info = json.params;
       map[key].info.host = socket.remoteAddress;
-      console.log("distributor : ", map[key].info);
+
       this.sendInfo();
     }
   }
 }
+
+new distributor();

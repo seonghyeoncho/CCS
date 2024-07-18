@@ -25,6 +25,7 @@ var mapUrls = {};
 var mapResponse = {};
 var mapRR = {};
 var index = 0;
+
 var server = http.createServer((req, res) => {
   var method = req.method;
   var uri = url.parse(req.url, true);
@@ -33,22 +34,21 @@ var server = http.createServer((req, res) => {
   //method: POST and PUT
   if (method == "POST" || method == "PUT") {
     var body = "";
+
     req.on("data", (data) => {
       body += data;
     });
-    
     // http 통신이 종료됨 -> 모든 데이터 수신 완료
     req.on("end", () => {
-      var params = qureystring.parse(body);
+      var params;
       //if data id JSON
       if (req.headers["content-type"] == "application/json") {
         params = JSON.parse(body);
       } else {
         params = qureystring.parse(body);
       }
+      onRequest(res, method, pathname, params);
     });
-
-    onRequest(res, method, pathname, params);
   } else {
     onRequest(res, method, pathname, uri.query);
   }
@@ -63,7 +63,7 @@ var server = http.createServer((req, res) => {
     params: {
       part: 8000,
       name: "gate", 
-      urls: [],
+      urls: []
     }
   }
 
@@ -71,7 +71,7 @@ var server = http.createServer((req, res) => {
 
   this.clientDistributor = new tcpClient(
     "127.0.0.1",
-    "9000",
+    9000,
     (options) => {
       isConnectedDistributor = true;
       this.clientDistributor.write(packet);
@@ -82,8 +82,8 @@ var server = http.createServer((req, res) => {
   );
 
   setInterval(() => {
-    if (isConnectedDistributor) {
-      this.clientDistributor.write(packet);
+    if (isConnectedDistributor != true) {
+      this.clientDistributor.connect();
     }
   }, 3000);
 });
@@ -173,8 +173,8 @@ function onDistribute(data) {
   for(var n in data.params) {
     var node = data.params[n];
     var key = node.host + ":" + node.port;
-
-    if(mapClient[key] == null && node.name != "gate") {
+    console.log("node", node);
+    if(mapClients[key] == null && node.name != "gate") {
       var client = new tcpClient(node.host, node.port, onCreateClient, onReadClient, onEndClient, onErrorClient);
       
       mapClients[key] = {

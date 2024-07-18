@@ -24,10 +24,13 @@ class tcpServer {
 
     //서버 생성
     this.server = net.createServer((socket) => {
-      this.onCreate(this.options);
+      this.onCreate(socket);
 
       socket.on("error", (exception) => {
-        this.onError(this.options, exception);
+        this.onClose(socket);
+      });
+      socket.on("close", () => {
+        this.onClose(socket);
       });
       socket.on("data", (data) => {
         var key = socket.remoteAddress + ":" + socket.remotePort;
@@ -75,13 +78,13 @@ class tcpServer {
 
     var isConnectedDistributor = false;
     
-    this.connectToDistributor = new tcpClient(
+    this.clientDistributor = new tcpClient(
       host, 
       port,
       //onCreate
       (options) => {
         isConnectedDistributor = true;
-        this.client.write(JSON.stringify(packet));
+        this.clientDistributor.write(packet);
       },
       //onRead
       (options, data) => { onNoti(data); },
@@ -94,11 +97,11 @@ class tcpServer {
     //3초마다 재연결 시도
     setInterval(() => {
       if(isConnectedDistributor != true) {
-        this.connectToDistributor.connect();
+        this.clientDistributor.connect();
       }
     }, 3000);
 
   }
 }
 
-module.expoerts = tcpServer;
+module.exports = tcpServer;
