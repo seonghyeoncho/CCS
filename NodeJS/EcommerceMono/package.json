@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "mysql": "2.18.1"
+    "mysql": "2.18.1",
+    "redis": "4.6.15"
   }
 }

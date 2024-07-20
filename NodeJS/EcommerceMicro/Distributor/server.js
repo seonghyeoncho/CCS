@@ -15,6 +15,8 @@ class tcpServer {
     port, 
     urls
   ) {
+    this.logTcpClient = null;
+
     this.context = {
       port: port,
       name: name,
@@ -45,6 +47,7 @@ class tcpServer {
           } else if(arr[n] == "") {
             break;
           } else {
+            this.writeLog(arr[n]);
             this.onRead(socket, JSON.parse(arr[n]));
           }
         }
@@ -67,7 +70,14 @@ class tcpServer {
   onClose(socket) {
     console.log("onClose", socket.remoteAddress, socket.remotePort);
   }
-
+  /**
+   * connect to Distributor
+   * 디스트리뷰터에 연결합니다. 호스트와 포트를 받아서 연결합니다.
+   * 콜백으로 받은 함수를 실행합니다.
+   * @param string host 
+   * @param number port 
+   * @param function onNoti 
+   */
   connectToDistributor(host, port, onNoti) {
     var packet = {
       uri: "/distributes",
@@ -87,7 +97,19 @@ class tcpServer {
         this.clientDistributor.write(packet);
       },
       //onRead
-      (options, data) => { onNoti(data); },
+      (options, data) => {
+        //로그 ms에 연결되지 않았고, 로그 서버가 아닌 경우: 로그 서버에 연결
+        if(this.logTcpClient == null && this.context.name != "logs") {
+          for(var n in data.pararms) {
+            const ms = data.params[n];
+            if(ms.name == "logs") {
+              this.connectToLog(ms.host, ms.port);
+              break;
+            }
+          }
+        }
+        onNoti(data); 
+      },
       //onEnd
       (options) => { isConnectedDistributor = false; },
       //onError

@@ -46,7 +46,8 @@ class distributor extends require('./server.js') {
   write(socket, packet) {
     socket.write(JSON.stringify(packet) + '¶')
   }
-
+ //정보를 전달합니다.
+ //소켓이 있다면 특정 소켓에만 정보를 전달하고, 소켓이 없다면 모든 소켓에 정보를 전달합니다.
   sendInfo(socket) {
     var packet = {
       uri: "/distributes",

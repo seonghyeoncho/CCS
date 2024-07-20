@@ -6,6 +6,11 @@ const conn = {
   database: "monolithic"
 };
 
+const redis = require("redis").createClient();
+redis.on("error", (err) => {
+  console.log("Redis Error " + err);
+});
+
 exports.onRequest = function(res, method, pathname, params, cb) {
   switch(method) {
     case "POST":
@@ -49,12 +54,15 @@ function register(method, pathname, params, cd) {
   } else {
     var connection = mysql.createConnection(conn);
     connection.connect();
-    connection.query("insert into goods(name, category, price, description) values (?, ?, ?, ?)"
+    connection.query("insert into goods(name, category, price, description) values (?, ?, ?, ?); select LAST_INSERT_ID() as id;"
       ,[params.name, params.category, params.price, params.description]
       , (error, results, fields) => {
         if(error) {
           response.errorcode = 1;
           response.errormessage = error;
+        } else {
+          const id = results[1][0].id;
+          redis.set(id, JSON.stringify(params));
         }
         cd(response);
     });
@@ -113,7 +121,7 @@ function unregister(method, pathname, params, cd) {
         if(error) {
           response.errorcode = 1;
           response.errormessage = error;
-        }
+        } else redis.del(params.id);
         cd(response);
     });
     connection.end();

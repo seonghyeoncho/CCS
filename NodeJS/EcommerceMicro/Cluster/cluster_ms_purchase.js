@@ -1,6 +1,7 @@
 'use strict';
 
 const business = require('../../EcommerceMono/mono_purchases.js');
+const cluster = require('cluster');
 
 class purchases extends require('../Distributor/server.js') {
   constructor() {
@@ -21,4 +22,15 @@ class purchases extends require('../Distributor/server.js') {
   }
 }
 
-new purchases();
+if (cluster.isMaster) {
+
+  // 자식 프로세스 실행
+  cluster.fork();
+  
+  cluster.on("exit", (worker, code, signal) => {
+    console.log(`worker ${worker.process.pid} died`);
+    cluster.fork();
+  })
+} else {
+  new purchases();
+}
