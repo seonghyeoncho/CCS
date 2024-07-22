@@ -124,6 +124,30 @@ class tcpServer {
     }, 3000);
 
   }
+  connectToLog(host, port) {
+    this.logTcpClient = new tcpClient(
+      host,
+      port,
+      (options) => {},
+      (options) => { this.logTcpClient = null; },
+      (options) => { this.logTcpClient = null; },
+    );
+    this.logTcpClient.connect();
+  }
+  writeLog(log) {
+    if(this.logTcpClient) {
+      const packet = {
+        uri: "/logs",
+        method: "POST",
+        key: 0,
+        params: log
+      };
+      this.logTcpClient.write(packet);
+    } else {
+      console.log(log);
+    }
+  }
 }
+
 
 module.exports = tcpServer;
